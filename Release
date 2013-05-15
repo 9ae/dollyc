@@ -1,0 +1,194 @@
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
+#include <math.h>
+#include <stdio.h>
+#include "loader.h"
+
+// define limbs enum
+#define HEAD 0
+#define TORSO 1
+#define WAIST 2
+#define ARM 3
+#define FOREARM 4
+#define HAND 5
+#define THIGH 6
+#define CALF 7
+#define FOOT 8
+
+// define joints enum
+#define NECK 11
+#define PELVIS 10
+#define RSHOULDER 12
+#define LSHOULDER 13
+#define RELBOW 14
+#define LELBOW 15
+#define RWRIST 16
+#define LWRIST 17
+#define RLEG 18
+#define LLEG 19
+#define RKNEE 20
+#define LKNEE 21
+#define RANKLE 22
+#define LANKLE 23
+
+// assumed NULL = 9
+
+static int neck=0, pelvis=0, r_shoulder=0, l_shoulder=0, r_elbow=0, l_elbow=0,
+r_wrist=0, l_wrist=0, r_legs=0,l_legs=0, r_knee=0, l_knee=0, r_ankle=0, l_ankle=0;
+static int neck_max=0, pelvis_max=0, r_shoulder_max=0, l_shoulder_max=0, r_elbow_max=0, l_elbow_max=0,
+r_wrist_max=0, l_wrist_max=0, r_legs_max=0,l_legs_max=0, r_knee_max=0, l_knee_max=0, r_ankle_max=0, l_ankle_max=0;
+static int neck_min=0, pelvis_min=0, r_shoulder_min=0, l_shoulder_min=0, r_elbow_min=0, l_elbow_min=0,
+r_wrist_min=0, l_wrist_min=0, r_legs_min=0,l_legs_min=0, r_knee_min=0, l_knee_min=0, r_ankle_min=0, l_ankle_min=0;
+
+float cam = 10.0;
+int active=9;
+
+void drawItem(int rendering, GLint face[][6], GLfloat vertex[][3],GLfloat normal[][3] )
+{
+	int i;
+	int j;
+
+
+switch(rendering) {
+case HEAD:
+//	face = face_indicies;
+//	vertex = verticies;
+//	normal = normals;
+	break;
+case TORSO:
+
+	break;
+case WAIST:
+
+	break;
+case ARM:
+
+	break;
+case FOREARM:
+
+	break;
+case HAND:
+
+	break;
+case THIGH:
+
+	break;
+case CALF:
+
+	break;
+case FOOT:
+
+	break;
+default:
+	return;
+}
+
+ glBegin (GL_TRIANGLES);
+  for(i=0;i<sizeof(face);i++)
+    {
+    for(j=0;j<3;j++)
+     {
+       int vi=face[i][j];
+       int ni=face[i][j+3];
+       glNormal3f (normal[ni][0],normal[ni][1],normal[ni][2]);
+       glColor3f(1.0f,0.0f,0.0f);
+       glVertex3f (vertex[vi][0],vertex[vi][1],vertex[vi][2]);
+     }
+    }
+
+// OR
+
+ for(i=0;i<sizeof(vertex) ;i++)
+ {
+	glColor3f(1.0f,0.0f,0.0f);
+	glVertex3f (vertex[i][0],vertex[i][1],vertex[i][2]);
+ }
+ glEnd ();
+}
+
+void init(void)
+{
+  glClearColor(0.0, 0.0, 0.0, 0.0);
+  glShadeModel(GL_FLAT);
+}
+
+void display(void)
+{
+glClear(GL_COLOR_BUFFER_BIT);
+glTranslatef(0.0, 0.0, 0.0);
+glScalef(0.5,0.5,0.5);
+glPushMatrix();
+
+// Set position of pelvis bone
+glTranslatef(0.0, 0.0, 0.0);
+glRotatef((GLfloat)pelvis, 0.0,0.0,0.0);
+
+// Set position of torso
+glTranslatef(0.0,0.5,0.0);
+glPushMatrix();
+glScalef(1.0,1.0,0.5);
+glutWireCube(1.5);
+glPopMatrix();
+glTranslatef(0.0,-0.5,0.0);
+
+	glPushMatrix();
+	// Move in position for neck bone
+	glTranslatef(0.0,1.0,0.0);
+	glRotatef((GLfloat) neck,0.0,0.0,0.0);
+	//Set position for head
+	glTranslatef(0.0,0.7,0.0);
+	glPushMatrix();
+	glutWireSphere(0.6,8,8);
+	glPopMatrix();
+	glPopMatrix();
+
+	glPushMatrix();
+		//Move position for R shoulder bone
+		glTranslatef(0.6, 1.0, 0.0);
+		glRotatef((GLfloat) r_shoulder, 0.0, 0.0, 0.0);
+		// Set position for Right Arm
+		glTranslatef(1.0, 0.0, 0.0);
+		glPushMatrix();
+			glScalef(2.0, 0.4, 0.5);
+			glutWireCube(1.0);
+		glPopMatrix();
+		// Move position for R elbow
+		glPushMatrix();
+			glTranslatef(1.0,0.0,0.0);
+			glRotatef((GLfloat)r_elbow,0.0,0.0,0.0);
+			//Set position for Right forearm
+			glTranslatef(1.0,0.0,0.0);
+			glPushMatrix();
+				glScalef(1.7,0.4,0.5);
+				glutWireCube(1.0);
+			glPopMatrix();
+			//Move position for R wrist
+			glTranslatef(0.5,0.0,0.0);
+			glRotatef((GLfloat) r_wrist, 0.0,0.0,0.0);
+			glTranslatef(0.5,0.0,0.0);
+			glPushMatrix();
+				glScalef(0.6,0.5,0.5);
+				glutWireCube(1.0);
+			glPopMatrix();
+		glPopMatrix();
+	glPopMatrix();
+
+//Set Position of Hip
+	//Move position for R leg
+
+
+
+
+
+/*
+   // Shoulder
+	   glTranslatef(0.0, 0.0, 0.0);
+	   glRotatef((GLfloat) r_shoulder, 0.0, 0.0, 0.0);
+	   glTranslatef(1.0, 0.0, 0.0);
+	   //Right Arm
+	   glPushMatrix();
+		   glScalef(2.0, 0.4, 1.0);
+		   glutWireCube(1.0);
+	   glPopMatrix();
+	   glTransla
