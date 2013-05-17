@@ -1,4 +1,4 @@
-dollyc
+Virtual Drawing Mannequin (C++)
 ======
 
 Virtual Drawing Mannequin C++ prototype. This project was started when WebGL was still new and not fully supported yet.
